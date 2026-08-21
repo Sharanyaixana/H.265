@@ -7,7 +7,7 @@ A personal knowledge base for learning **H.265 (HEVC)** video compression from t
 | File / folder | What it is |
 |---|---|
 | **[notes/](notes/README.md)** | The heart of this repo — one short page per concept, each named after the question it answers. See **[notes/README.md](notes/README.md)** for the full index, grouped into chapters. |
-| **[presentation/](presentation/)** | The actual slide decks (`1_introduction.pptx` …). |
+| **[presentation/](presentation/)** | The actual slide decks (`1_introduction.pptx`, `2_inside_hevc_coding_loop.pptx` …). |
 | **[SOURCES.md](SOURCES.md)** | Master index of every source (S1–S34) with links. Cited across the repo as `[[S3]](SOURCES.md#s3)`. |
 | **[papers/](papers/README.md)** | Curated reading list — core video-coding papers + Prof. Sen's (SPARC Lab) papers. |
 | **[open-questions.md](open-questions.md)** | Running list of unresolved questions to revisit. |
