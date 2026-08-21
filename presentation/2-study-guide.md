@@ -10,7 +10,7 @@ Goal: understand **every slide well enough to explain it in your own words**, no
 
 **What you're saying:** the whole talk is one journey — Partition → Predict → Transform → Quantize → Code → Reconstruct — and today you're following one block through all six steps.
 
-**Explain it:** this is the same hybrid pipeline from talk 1, just with the internals turned on. Every codec since MPEG-2 uses this loop; HEVC's contribution is *how* each step is done (bigger flexible blocks, more prediction modes, CABAC-only entropy coding, a new SAO filter). Framing the whole talk as "one block's journey" gives the audience a thread to hold onto through 18 slides of internals.
+**Explain it:** this is the same hybrid pipeline from talk 1, just with the internals turned on. Every codec since MPEG-2 uses this loop; HEVC's contribution is *how* each step is done (bigger flexible blocks, more prediction modes, CABAC-only entropy coding, a new SAO filter). Framing the whole talk as "one block's journey" gives the audience a thread to hold onto through the internals ahead.
 
 **Repo note:** [what-is-the-hybrid-codec-pipeline.md](../notes/what-is-the-hybrid-codec-pipeline.md)
 **Links:** [[S3]](../SOURCES.md#s3) Sullivan et al., HEVC overview (the authoritative source for the whole deck) · [[S33]](../SOURCES.md#s33) Yao Wang (NYU) — pipeline diagram slides
@@ -204,6 +204,17 @@ Goal: understand **every slide well enough to explain it in your own words**, no
 
 ---
 
+## Slide 19 — "What's next: searching HEVC's decision space efficiently"
+
+**What you're saying:** four directions that address slide 18's closing question — (1) **fast mode/partition search** (early termination, learned heuristics shrink the RDO search), (2) **parallel processing** (Tiles and WPP recover multi-core speed despite CABAC's serial coding), (3) **hardware acceleration** (dedicated silicon for motion estimation, transform, entropy coding), (4) **approximate computing** (low-power transform/quantization datapaths trade accuracy for energy savings). **Coming in Presentation 3: how Professor Sen's lab searches this space in real time, with less energy.**
+
+**Explain it:** this is the explicit "what's next" slide — it turns slide 18's closing research question into four concrete answers, then names the actual next talk. Items 1–2 address the *speed* problem (RDO's exhaustive search, CABAC's serial bottleneck); items 3–4 address the *energy* problem (dedicated hardware, approximate computing) — which is exactly where Prof. Sen's SPARC Lab work fits, since [[S10]](../SOURCES.md#s10) is a real example of approximating the transform+quantization datapath for energy savings. Use this slide to set expectations for your next presentation, not to teach the details now — one sentence per item is enough.
+
+**Repo note:** [where-is-h265-research-heading.md](../notes/where-is-h265-research-heading.md)
+**Links:** [[S10]](../SOURCES.md#s10) Prof. Sen — approximate DCT/quantization paper · [[S16]](../SOURCES.md#s16) SPARC Lab home
+
+---
+
 ## Quick self-check
 
 Before presenting, you should be able to, without notes:
@@ -212,4 +223,4 @@ Before presenting, you should be able to, without notes:
 - [ ] Say, in order, what happens to a residual: transform → quantize → CABAC (slides 11–13), and which single step is lossy.
 - [ ] Walk through the RDO worked example (slide 16) and get the arithmetic right live if asked.
 - [ ] Explain deblocking vs. SAO and why both are "in-loop" (slide 15).
-- [ ] Answer "what's next research-wise?" by connecting slide 18's question to Prof. Sen's lab.
+- [ ] Answer "what's next research-wise?" by connecting slide 18's question to the four directions on slide 19, and name what Presentation 3 covers.
