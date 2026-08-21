@@ -8,7 +8,7 @@ Two lists: **(A) core video-coding papers** to understand H.265, and **(B) Prof.
 
 ## A. Core video-coding papers (read these to learn HEVC)
 
-1. **G. J. Sullivan, J.-R. Ohm, W.-J. Han, T. Wiegand — "Overview of the High Efficiency Video Coding (HEVC) Standard,"** *IEEE Trans. CSVT*, 2012 [[S3]](../SOURCES.md#s3). ⭐ **Start here.** Readable and authoritative; read once shallow (~Day 4), once deep (~Day 13).
+1. **G. J. Sullivan, J.-R. Ohm, W.-J. Han, T. Wiegand — "Overview of the High Efficiency Video Coding (HEVC) Standard,"** *IEEE Trans. CSVT*, 2012 [[S3]](../SOURCES.md#s3). ⭐ **Start here.** Readable and authoritative; worth reading twice — once shallow for orientation, once deep for detail.
    - _Takeaway:_ _______________
 
 2. **J.-R. Ohm et al. — "Comparison of the Coding Efficiency of Video Coding Standards—Including HEVC,"** *IEEE TCSVT*, 2012 [[S4]](../SOURCES.md#s4). Where the "~50% of H.264" claim is measured.

@@ -11,7 +11,13 @@ Quantization is the deliberately lossy step: each transform coefficient is divid
 - In x265 you'll meet **CRF**, a quality-target mode built on QP.
 
 ## Verify it yourself
-- Encode the same clip at CRF 18 / 28 / 38 (README §5.2A) and record the sizes.
+- Encode the same clip at a few CRF values and compare file size:
+  ```
+  ffmpeg -i input.mp4 -c:v libx265 -crf 18 -preset medium out_crf18.mp4
+  ffmpeg -i input.mp4 -c:v libx265 -crf 28 -preset medium out_crf28.mp4
+  ffmpeg -i input.mp4 -c:v libx265 -crf 38 -preset medium out_crf38.mp4
+  ```
+  Lower CRF → finer quantization → bigger file, higher quality. Record the sizes and see the tradeoff for yourself.
 
 ## Questions this raised
 - (move unresolved ones to ../open-questions.md)

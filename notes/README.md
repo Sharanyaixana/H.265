@@ -9,6 +9,7 @@ Each note answers **one question**. Files are named after the question they answ
 ## Chapter 1 — Foundations: why compress at all?
 | Day | Note |
 |---|---|
+| 1 | [What is H.265, and why was it made?](what-is-h265-and-why-was-it-made.md) |
 | 1 | [Why is raw video so large?](why-is-raw-video-so-large.md) |
 | 1 | [What is YCbCr and chroma subsampling?](what-is-ycbcr-and-chroma-subsampling.md) |
 | 1 | [Interlaced vs. progressive scan?](interlaced-vs-progressive-scan.md) *(background)* |
