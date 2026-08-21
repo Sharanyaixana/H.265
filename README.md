@@ -7,7 +7,7 @@ A personal knowledge base for learning **H.265 (HEVC)** video compression from t
 | File / folder | What it is |
 |---|---|
 | **[notes/](notes/README.md)** | The heart of this repo — one short page per concept, each named after the question it answers. See **[notes/README.md](notes/README.md)** for the full index, grouped into chapters. |
-| **[presentation/](presentation/)** | The actual slide decks (`1_introduction.pptx`, `2_inside_hevc_coding_loop.pptx` …). |
+| **[presentation/](presentation/)** | The actual slide decks (`1_introduction.pptx`, `2_inside_hevc_coding_loop.pptx` …) and a [slide-by-slide study guide](presentation/2-study-guide.md) for deck 2. |
 | **[SOURCES.md](SOURCES.md)** | Master index of every source (S1–S34) with links. Cited across the repo as `[[S3]](SOURCES.md#s3)`. |
 | **[papers/](papers/README.md)** | Curated reading list — core video-coding papers + Prof. Sen's (SPARC Lab) papers. |
 | **[open-questions.md](open-questions.md)** | Running list of unresolved questions to revisit. |
@@ -15,7 +15,7 @@ A personal knowledge base for learning **H.265 (HEVC)** video compression from t
 ## How to navigate
 
 - **Learning a concept?** Open the notes index at **[notes/README.md](notes/README.md)** and pick the question — each note is a self-contained one-pager.
-- **Preparing / giving a talk?** The slide decks live in **[presentation/](presentation/)**.
+- **Preparing / giving a talk?** The slide decks live in **[presentation/](presentation/)**; deck 2 has a matching [study guide](presentation/2-study-guide.md) to learn every slide properly.
 - **Need a source or citation?** Everything is indexed in [SOURCES.md](SOURCES.md).
 - **Stuck on something?** Add it to [open-questions.md](open-questions.md) and come back to it.
 

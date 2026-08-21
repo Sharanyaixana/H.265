@@ -84,6 +84,18 @@ The HEVC overview [[S1]](../SOURCES.md#s1) reports ~50% bitrate savings.
 | <a id="s33"></a>**S33** | Yao Wang (NYU) — *Predictive & Block-Based Hybrid Video Coding* (lecture slides, PDF) | https://eeweb.engineering.nyu.edu/~yao/EL6123_s16/PredictiveVideocoding.pdf ✅ | Slide deck with the full encoder/decoder loop diagram + reconstruction feedback path. |
 | <a id="s34"></a>**S34** | Wikipedia — *High Efficiency Video Coding (HEVC)* | https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding ✅ | Quick factual reference: history, versions, profiles, adoption, licensing. |
 
+## H. Presentation 2 — "Inside the HEVC Coding Loop" (internals)
+
+| ID | Source | Link | Use it for |
+|---|---|---|---|
+| <a id="s35"></a>**S35** ⭐ | vcodex (Iain Richardson) — *HEVC: An Introduction to High Efficiency Coding* | https://www.vcodex.com/hevc-an-introduction-to-high-efficiency-coding ✅ | The single best overview of CTU→CU→PU quadtree partitioning, by the author of [S8]/[S31]. |
+| <a id="s36"></a>**S36** | vcodex — *H.264/AVC Context-Adaptive Binary Arithmetic Coding (CABAC)* | https://www.vcodex.com/h264avc-context-adaptive-binary-arithmetic-coding-cabac ✅ | Deep dive on CABAC's mechanics (binarization, context modeling, arithmetic coding) — HEVC uses the same core method. |
+| <a id="s37"></a>**S37** | Wikipedia — *Context-adaptive binary arithmetic coding* | https://en.wikipedia.org/wiki/Context-adaptive_binary_arithmetic_coding ✅ | Quick reference for CABAC's three stages. |
+| <a id="s38"></a>**S38** | vcodex — *H.264/AVC 4×4 Transform and Quantization* | https://www.vcodex.com/h264avc-4x4-transform-and-quantization ✅ | How the integer transform concentrates energy and how quantization discards it — HEVC extends the same idea to larger blocks. |
+| <a id="s39"></a>**S39** | vcodex — *H.264/AVC Loop Filter* | https://www.vcodex.com/h264avc-loop-filter ✅ | The deblocking filter concept that HEVC's deblocking stage builds on (HEVC adds SAO on top). |
+| <a id="s40"></a>**S40** | Wikipedia — *Deblocking filter (video)* | https://en.wikipedia.org/wiki/Deblocking_filter_(video) ✅ | Quick reference on why/how deblocking removes block artifacts. (Doesn't cover SAO — use [S3] for that.) |
+| <a id="s41"></a>**S41** | Wikipedia — *Rate–distortion optimization* | https://en.wikipedia.org/wiki/Rate%E2%80%93distortion_optimization ✅ | Confirms the `J = D + λR` Lagrangian cost formulation used across video coding. |
+
 ---
 
 ### Maintenance notes
