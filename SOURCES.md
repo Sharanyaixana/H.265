@@ -96,6 +96,25 @@ The HEVC overview [[S1]](../SOURCES.md#s1) reports ~50% bitrate savings.
 | <a id="s40"></a>**S40** | Wikipedia — *Deblocking filter (video)* | https://en.wikipedia.org/wiki/Deblocking_filter_(video) ✅ | Quick reference on why/how deblocking removes block artifacts. (Doesn't cover SAO — use [S3] for that.) |
 | <a id="s41"></a>**S41** | Wikipedia — *Rate–distortion optimization* | https://en.wikipedia.org/wiki/Rate%E2%80%93distortion_optimization ✅ | Confirms the `J = D + λR` Lagrangian cost formulation used across video coding. |
 
+## I. Deep theory — why the coding loop must be closed (foundational literature)
+
+| ID | Source | Link | Use it for |
+|---|---|---|---|
+| <a id="s42"></a>**S42** ⭐ | A. N. Netravali, J. D. Robbins, "Motion-Compensated Television Coding: Part I," *Bell System Technical Journal*, 58(3), 1979 | DOI: 10.1002/j.1538-7305.1979.tb02237.x ⚠️ | **The origin paper** for motion-compensated closed-loop predictive coding — where "predict from the reconstructed frame, not the original" was first formalized. |
+| <a id="s43"></a>**S43** | H. G. Musmann, P. Pirsch, H.-J. Grallert, "Advances in Picture Coding," *Proceedings of the IEEE*, 73(4), 1985 | DOI: 10.1109/PROC.1985.13172 ⚠️ | The classic survey that names and diagrams **"hybrid coding"** (motion-compensated prediction + block transform + DPCM feedback) — the direct ancestor of H.261→HEVC's architecture. |
+| <a id="s44"></a>**S44** | G. J. Sullivan, T. Wiegand, "Rate-Distortion Optimization for Video Compression," *IEEE Signal Processing Magazine*, 15(6), 1998 | DOI: 10.1109/79.733497 ⚠️ | The tutorial paper behind the `J = D + λR` Lagrangian formulation used in every modern encoder's mode decision (ties forward to RDO, slide 16). |
+| <a id="s45"></a>**S45** | ITU-T Rec. H.261 (1988/1990) — the first standard to formalize the closed motion-compensated DPCM loop | https://www.itu.int/rec/T-REC-H.261 ⚠️ | Historical reference: proves this exact loop structure predates HEVC by ~25 years. |
+
+## J. Quality metrics, complexity, and broader approximate-computing literature
+
+| ID | Source | Link | Use it for |
+|---|---|---|---|
+| <a id="s46"></a>**S46** ⭐ | G. Bjøntegaard, "Calculation of Average PSNR Differences Between RD-Curves," ITU-T SG16 Q.6 VCEG, Doc. VCEG-M33, 2001 | https://www.itu.int/wftp3/av-arch/video-site/0104_Aus/VCEG-M33.doc ⚠️ | **The actual BD-rate methodology** behind every "X% bitrate savings" claim in this book (Ch. 21). |
+| <a id="s47"></a>**S47** | Z. Wang, A. C. Bovik, H. R. Sheikh, E. P. Simoncelli, "Image Quality Assessment: From Error Visibility to Structural Similarity," *IEEE Trans. Image Processing*, 13(4), 2004 | DOI: 10.1109/TIP.2003.819861 ⚠️ | The original SSIM paper — the standard alternative/complement to PSNR. |
+| <a id="s48"></a>**S48** | Z. Li, A. Aaron, I. Katsavounidis, A. Moorthy, M. Manohara, "Toward a Practical Perceptual Video Quality Metric," Netflix Technology Blog, 2016 | https://netflixtechblog.com/toward-a-practical-perceptual-video-quality-metric-653f208b9652 ✅ | VMAF's origin and rationale — pairs with [[S25]](SOURCES.md#s25) (the VMAF codebase itself). |
+| <a id="s49"></a>**S49** | S. Mittal, "A Survey of Techniques for Approximate Computing," *ACM Computing Surveys*, 48(4), 2016 | DOI: 10.1145/2893356 ⚠️ | Broader field grounding for approximate computing — shows Prof. Sen's approach within the wider research landscape, not as an isolated technique. |
+| <a id="s50"></a>**S50** | G. Correa, P. Assunção, L. Agostini, L. A. da Silva Cruz, "Complexity Control of High Efficiency Video Encoders for Power-Constrained Devices," *IEEE Trans. Consumer Electronics*, 57(4), 2011 | DOI: 10.1109/TCE.2011.6131130 ⚠️ | A non-Sen-lab example of HEVC complexity/power-aware encoding research — broadens the literature base for Ch. 19–20 beyond a single lab's papers. |
+
 ---
 
 ### Maintenance notes
