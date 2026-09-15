@@ -1,41 +1,83 @@
-# H.265 / HEVC — Knowledge Base
+# H.265 / HEVC Knowledge Base
 
-A personal knowledge base for learning **H.265 (HEVC)** video compression from the ground up. This README explains what's in the repo and how to navigate it.
+A study and presentation repository for **H.265 / High Efficiency Video Coding (HEVC)**. It separates explanatory material, short revision notes, primary references, unresolved questions, papers, and presentation artifacts.
 
-## What's here
+## Start here
 
-| File / folder | What it is |
+Choose the resource that matches your immediate goal:
+
+| Goal | Resource |
 |---|---|
-| **[TEXTBOOK.md](TEXTBOOK.md)** | Full 23-chapter textbook covering everything behind Presentations 1 & 2 plus quality metrics, bitstream structure, and critical paper-reading skills — history, math, one running worked example threaded through the whole coding loop, quizzes with an answer key, and a chapter-by-chapter reading/video list. The deep-study reference. |
-| **[notes/](notes/README.md)** | The heart of this repo — one short page per concept, each named after the question it answers. See **[notes/README.md](notes/README.md)** for the full index, grouped into chapters. |
-| **[presentation/](presentation/)** | The actual slide decks (`1_introduction.pptx`, `2_inside_hevc_coding_loop.pptx` …) and a [slide-by-slide study guide](presentation/2-study-guide.md) for deck 2. |
-| **[SOURCES.md](SOURCES.md)** | Master index of every source (S1–S50) with links. Cited across the repo as `[[S3]](SOURCES.md#s3)`. |
-| **[papers/](papers/README.md)** | Curated reading list — core video-coding papers + Prof. Sen's (SPARC Lab) papers. |
-| **[open-questions.md](open-questions.md)** | Running list of unresolved questions to revisit. |
+| Learn the subject systematically | [TEXTBOOK.md](TEXTBOOK.md) |
+| Review one concept quickly | [Notes index](notes/README.md) |
+| Prepare or deliver a talk | [Presentation index](presentation/README.md) |
+| Find a paper, standard, tutorial, or implementation | [SOURCES.md](SOURCES.md) |
+| Follow the prioritized paper-reading list | [Papers to read](papers/README.md) |
+| Track unresolved questions | [Open questions](open-questions.md) |
+| Recover the HEVC book's technical conclusions | [HEVC book memory](ai%20build/memory.md) |
+| Understand the project's purpose and working standards | [AI build guidance](ai%20build/motivation.md) |
 
-## How to navigate
+## Repository structure
 
-- **Want the deep, textbook-level understanding?** Read **[TEXTBOOK.md](TEXTBOOK.md)** front to back — 20 chapters, quizzes, worked examples, and a full reading/video list per chapter.
-- **Learning a concept fast?** Open the notes index at **[notes/README.md](notes/README.md)** and pick the question — each note is a self-contained one-pager.
-- **Preparing / giving a talk?** The slide decks live in **[presentation/](presentation/)**; deck 2 has a matching [study guide](presentation/2-study-guide.md) to learn every slide properly.
-- **Need a source or citation?** Everything is indexed in [SOURCES.md](SOURCES.md).
-- **Stuck on something?** Add it to [open-questions.md](open-questions.md) and come back to it.
-
-## Repo structure
-
-```
+```text
 H.265/
-├── README.md          ← you are here (repo guide)
-├── TEXTBOOK.md         ← full 20-chapter textbook (deep study)
-├── notes/             ← one page per concept
-│   └── README.md      ← notes index (start here to learn)
-├── presentation/      ← slide decks (1_introduction.pptx …)
-├── SOURCES.md         ← master link index (S1–S50)
-├── papers/            ← reading list
-└── open-questions.md  ← unresolved questions
+├── README.md
+├── TEXTBOOK.md
+├── SOURCES.md
+├── open-questions.md
+├── ai build/
+│   ├── feedback.md
+│   ├── memory.md
+│   ├── motivation.md
+│   └── rules.md
+├── notes/
+│   ├── README.md
+│   └── one question-focused note per concept
+├── papers/
+│   ├── README.md
+│   └── High_Efficiency_Video_Coding_HEVC.pdf
+└── presentation/
+    ├── README.md
+    ├── PRESENTATION_DISCUSSION_SUMMARY.md
+    ├── Presentation 1 - Introduction to HEVC.pptx
+    └── Presentation 2 - Inside the HEVC Coding Loop.pptx
 ```
 
-## Conventions
+## Main learning resources
 
-- **Notes** are named after the question they answer (e.g. `what-are-i-p-and-b-frames-and-gop.md`). The index is at [notes/README.md](notes/README.md).
-- **Sources** are cited inline as `[[S3]](SOURCES.md#s3)`; new sources are appended to [SOURCES.md](SOURCES.md) with the next ID (never renumber existing ones).
+### Textbook
+
+[TEXTBOOK.md](TEXTBOOK.md) is the main study reference. Its 23 chapters cover video representation, prediction, the HEVC coding loop, encoder decisions, quality measurement, bitstream structure, implementation, and research framing. Simplified examples are labeled as illustrations and are not presented as traces of normative HEVC syntax.
+
+### Notes
+
+[notes/README.md](notes/README.md) organizes short notes into a learning sequence. Each file answers one question and uses a descriptive filename, such as `what-is-quantization-and-qp.md`.
+
+### Presentations
+
+[presentation/README.md](presentation/README.md) indexes the presentation series. [PRESENTATION_DISCUSSION_SUMMARY.md](presentation/PRESENTATION_DISCUSSION_SUMMARY.md) records the feedback and unresolved issues that should guide future revisions.
+
+- [Presentation 1 - Introduction to HEVC](presentation/Presentation%201%20-%20Introduction%20to%20HEVC.pptx)
+- [Presentation 2 - Inside the HEVC Coding Loop](presentation/Presentation%202%20-%20Inside%20the%20HEVC%20Coding%20Loop.pptx)
+
+### Sources and papers
+
+[SOURCES.md](SOURCES.md) is the stable source catalogue. References use IDs such as `S3`; do not renumber existing IDs. [papers/README.md](papers/README.md) turns that catalogue into a prioritized reading list, including papers relevant to Professor Shreyas Sen's SPARC Lab.
+
+### AI build guidance
+
+The `ai build/` folder is the operating brief for any AI assistant working on this repository:
+
+- [motivation.md](ai%20build/motivation.md) explains why the project exists and how H.265 connects to the longer-term research objective.
+- [feedback.md](ai%20build/feedback.md) converts feedback from Presentations 0–2 into concrete improvement checks.
+- [memory.md](ai%20build/memory.md) preserves the important technical conclusions, implementation lessons, quantitative results, and research questions from the repository's HEVC textbook.
+- [rules.md](ai%20build/rules.md) defines evidence standards, writing quality, file placement, slide conventions, and confidentiality boundaries.
+
+## Repository conventions
+
+- Keep one focused question per note.
+- Add every new external source to [SOURCES.md](SOURCES.md) before citing it elsewhere.
+- Cite sources as `[[S3]](SOURCES.md#s3)` from root files or `[[S3]](../SOURCES.md#s3)` from subfolders.
+- Distinguish normative HEVC behavior, encoder implementation choices, and teaching illustrations.
+- Add unresolved technical questions to [open-questions.md](open-questions.md), including the current understanding and the next verification step.
+- Store final slide decks in `presentation/`; do not commit rendered previews or temporary PowerPoint files.

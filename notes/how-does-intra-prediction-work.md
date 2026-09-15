@@ -1,17 +1,29 @@
 # How does intra prediction work?
 
-> Chapter 2 · Day 4
+> Learning sequence: Prediction · Sources: [[S1]](../SOURCES.md#s1) [[S3]](../SOURCES.md#s3) [[S32]](../SOURCES.md#s32)
 
-## One-line answer
-Intra prediction guesses a block's pixels from already-decoded neighbors (the row above and column to the left) in the *same* frame; HEVC offers 35 luma modes (Planar, DC, and 33 angular directions), and the encoder picks the best by RDO.
+## Short answer
 
-## Key points
-- Planar = smooth gradients; DC = flat average; angular = directional edges/textures.
-- 35 modes vs. H.264's 9 → a better fit → **smaller residual** before the transform.
-- Intra luma residuals use a 4×4 DST instead of DCT (better statistical match).
+Intra prediction constructs a prediction block from already reconstructed samples in the same picture, usually along the top and left boundaries. The encoder tests legal modes and signals the selected mode; the decoder reproduces that prediction and adds the decoded residual.
 
-## Diagram to draw
-- The angular "fan" of directions predicting a block from top/left reference samples.
+## HEVC luma modes
 
-## Questions this raised
-- (move unresolved ones to ../open-questions.md)
+HEVC defines 35 intra prediction modes for luma:
+
+- **Planar:** predicts a smooth two-dimensional surface.
+- **DC:** predicts a nearly constant block from an average of reference samples.
+- **33 angular modes:** extend boundary samples into the block along different directions.
+
+The reference samples must already be available to both encoder and decoder. When required neighbors are unavailable, the standard defines substitution behavior. Reference-sample filtering and boundary smoothing may also apply depending on block size and mode [[S1]](../SOURCES.md#s1).
+
+## How the encoder chooses a mode
+
+The HEVC standard defines the legal modes and how to decode them, but not one mandatory encoder search. A practical encoder commonly performs a fast screening of modes and then compares promising candidates using rate-distortion cost. A good mode reduces residual energy, but its signaling bits also count.
+
+## Small example
+
+If a diagonal edge continues from the reconstructed top and left neighbors, a matching angular mode can predict that edge. Horizontal or vertical modes would leave a larger residual. The encoder does not know the answer from the picture label; it evaluates candidates.
+
+## What to remember
+
+Intra prediction does not copy the original block. It creates a reproducible guess from already decoded spatial neighbors and codes the remaining error.

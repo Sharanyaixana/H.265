@@ -1,23 +1,31 @@
 # What is H.265, and why was it made?
 
-> Chapter 1 · Sources: [[S1]](../SOURCES.md#s1) [[S2]](../SOURCES.md#s2) [[S3]](../SOURCES.md#s3) [[S34]](../SOURCES.md#s34)
+> Learning sequence: Foundations · Sources: [[S1]](../SOURCES.md#s1) [[S2]](../SOURCES.md#s2) [[S3]](../SOURCES.md#s3) [[S4]](../SOURCES.md#s4)
 
-## One-line answer
-**H.265**, also called **HEVC (High Efficiency Video Coding)**, is a video compression standard finalized in **2013** with one blunt, quantified goal: **the same visual quality as the older H.264 standard, at roughly half the bitrate.**
+## Short answer
 
-## Who made it, and what "standard" means
-- Formally published as **ITU-T H.265** [[S1]](../SOURCES.md#s1) and **ISO/IEC 23008-2 / MPEG-H Part 2** [[S2]](../SOURCES.md#s2) — identical text, two publishing bodies.
-- Developed jointly by **ITU-T VCEG** and **ISO/IEC MPEG**, working together as the **JCT-VC (Joint Collaborative Team on Video Coding)**.
-- A "standard" here means: a precise, agreed-upon recipe for **encoding video into a compressed bitstream and decoding it back** — so that any compliant encoder and any compliant decoder, made by different companies, interoperate correctly.
+**H.265**, also called **High Efficiency Video Coding (HEVC)**, is a video-compression standard whose first edition was approved in 2013. It was designed to provide substantially better compression than H.264/Advanced Video Coding (AVC), with roughly 50% bitrate savings at comparable visual quality in the test conditions reported during standardization. That percentage is an average experimental result, not a guarantee for every video or encoder.
 
-## The key clarification (a common beginner confusion — and a good talking point)
-A standard like H.265 **only defines the bitstream syntax and how a decoder must interpret it.** It does **not** dictate *how* to encode. That freedom is why two H.265 encoders (say `x265` vs. a phone's hardware encoder) can produce very different quality at the same bitrate — they're both valid, but one made smarter choices. **This gap between "what the standard defines" and "how a smart encoder chooses" is where most encoding research and engineering happens.**
+## What the standard actually defines
+
+HEVC defines a compressed-bitstream syntax and the decoding process needed to turn a conforming bitstream into reconstructed pictures. It also constrains what a conforming encoder may place in that bitstream. It does **not** prescribe one search algorithm for choosing partitions, prediction modes, motion vectors, or rate control.
+
+This distinction explains why two HEVC encoders can both be compliant yet produce different quality, bitrate, speed, and power consumption. Encoder decision-making is a major engineering and research space.
 
 ## Why it was developed
-Video kept growing — more pixels (HD → 4K → 8K), higher frame rates, higher bit depth, far more streaming. The previous standard, **H.264/AVC (2003)**, was excellent but a decade old and increasingly strained by 4K/UHD content. HEVC's target was explicit: **~50% bitrate reduction at equal quality**, so that 4K/UHD streaming and storage become practical [[S3]](../SOURCES.md#s3). It hits this on average across many types of content (the gain varies by content and operating point).
 
-## Where it fits in the family
-`H.264/AVC (2003) → H.265/HEVC (2013) → H.266/VVC (2020) & AV1 (~2018)` — each generation roughly halves the bitrate of its predecessor at a cost of much higher encoder complexity. See [how-does-h265-compare-to-h264-av1-vvc.md](how-does-h265-compare-to-h264-av1-vvc.md).
+Video workloads were moving toward higher resolution, frame rate, and bit depth. Sending H.264-quality video at lower bitrate would reduce transmission and storage cost and make Ultra High Definition delivery more practical. HEVC kept the hybrid prediction-transform architecture but expanded its block sizes, prediction choices, transforms, filtering, and parallel-processing support [[S3]](../SOURCES.md#s3).
 
-## Questions this raised
-- (move unresolved ones to ../open-questions.md)
+## Names and organizations
+
+- **ITU-T H.265** is the ITU-T designation [[S1]](../SOURCES.md#s1).
+- **ISO/IEC 23008-2** is the technically aligned ISO/IEC designation [[S2]](../SOURCES.md#s2).
+- The standard was developed jointly by the ITU-T Video Coding Experts Group and ISO/IEC Moving Picture Experts Group through the Joint Collaborative Team on Video Coding.
+
+## What to remember
+
+HEVC is primarily a common language between an encoder and decoder. The decoder behavior is standardized; the encoder's strategy for finding a good compliant representation is largely open.
+
+## Related question
+
+See [How does H.265 compare with H.264, AV1, and VVC?](how-does-h265-compare-to-h264-av1-vvc.md).

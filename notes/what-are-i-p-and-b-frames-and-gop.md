@@ -1,42 +1,46 @@
-# What are I, P, and B frames (and GOP)?
+# What are I, P, and B pictures, and what is a GOP?
 
-> Chapter 2 · Day 3 · Sources: [[S27]](../SOURCES.md#s27) [[S28]](../SOURCES.md#s28)
+> Learning sequence: Prediction · Sources: [[S1]](../SOURCES.md#s1) [[S3]](../SOURCES.md#s3) [[S28]](../SOURCES.md#s28)
 
-## One-line answer
-A **GOP (Group of Pictures)** is the video segment between consecutive keyframes — the smallest independently playable chunk. Inside it: **I-frames** are self-contained (random-access points), **P-frames** predict from past frames, and **B-frames** predict from both past and future frames (smallest, but need out-of-order decoding).
+## Short answer
 
-## The three frame types
+I, P, and B describe the prediction capabilities of coded slices. Informally, people also call the corresponding coded pictures I, P, and B pictures. A **Group of Pictures (GOP)** is an encoder or application term for an arranged sequence of pictures and their prediction dependencies; it is not automatically an independently decodable segment.
 
-| Type | Predicted from | Typical size (1080p) | Role |
-|---|---|---|---|
-| **I** (Intra) | itself only (spatial) | 80–250 kbit; largest | GOP anchor / random-access point |
-| **P** (Predicted) | past reference(s) | ~30–60% of an I-frame | motion + residual vs. earlier frames |
-| **B** (Bi-directional) | past **and** future | ~15–30% of an I-frame; smallest | most compressible; interpolates between neighbors |
+## The three slice types
 
-- **Size order:** I > P > B. **Efficiency order:** B > P > I.
-- Concrete cost: **removing B-frames raises bitrate ~48%** at equal quality — that's the price of low-latency live streaming. [[S28]](../SOURCES.md#s28)
+| Type | What it permits |
+|---|---|
+| **I — Intra** | Intra-coded blocks; no inter prediction from other pictures |
+| **P — Predictive** | Intra coding or inter prediction using Reference Picture List 0 |
+| **B — Bi-predictive** | Intra coding or inter prediction using List 0, List 1, or both |
+
+A B picture is not simply “the average of the previous and next frame.” Each Prediction Unit can select its references, motion vectors, and whether one or two predictions are combined. B pictures can also be stored as references in hierarchical coding structures.
+
+## Random access is a separate property
+
+An intra-coded picture is not automatically a clean random-access point. HEVC defines Intra Random Access Point picture types, including:
+
+- **IDR — Instantaneous Decoding Refresh:** prevents later pictures from referring to pictures before the refresh point.
+- **CRA — Clean Random Access:** permits efficient random access with rules for leading pictures.
+
+These details matter more than the informal word “keyframe.”
 
 ## GOP structure
-- A repeating pattern, e.g. `I B B P B B P B B P …`, restarting at each I-frame.
-- **GOP length is an engineering knob:** short GOP → easy seeking + error recovery, bigger files; long GOP → better compression, harder to seek, more fragile. Typical VOD ≈ 2-second GOP (48 frames @ 24 fps).
 
-## Display order ≠ decode order (the "aha")
-- A B-frame needs a *future* frame as reference, so the decoder must decode that future frame **first**. Frames are stored in **decode order**, reordered to **display order** for viewing.
-- The display-position index is **POC (Picture Order Count)**.
-- Cost: each B-frame between P-frames adds buffering latency (~42 ms at 24 fps) — why video calls (WebRTC) often drop B-frames.
+A GOP description such as `I B B B P ...` summarizes coding order or display-order relationships chosen by the encoder. GOP design trades among:
 
-## Keyframe / GOP subtleties (good for Q&A)
-- **IDR** (Instantaneous Decoder Refresh): a keyframe that also clears the reference buffer → a true random-access point.
-- **CRA** (Clean Random Access, HEVC): an entry point that still lets leading pictures reference across the boundary — useful for splicing.
-- **Closed GOP:** fully self-contained; required for adaptive-bitrate (ABR) switching. **Open GOP:** first B-frames may reference the previous GOP (saves ~1–3%) but breaks clean segment boundaries.
-- **Hierarchical B-pyramid:** B-frames reference other B-frames in temporal layers → ~10–15% better compression in HEVC/AV1, at the cost of deeper buffering.
-- **AV1 note:** display order = coding order; uses filtered non-displayable references (ALTREF/GOLDEN) instead of a classic GOP.
+- compression efficiency;
+- random-access interval;
+- encoder and decoder buffering;
+- end-to-end latency;
+- resilience to loss and segment boundaries.
 
-## Diagram to draw
-- `I B B P B B P` with prediction arrows (P → back; B → back **and** forward). Below it, write decode order vs. display order and confirm they differ.
+Open and closed GOPs differ in whether prediction dependencies cross the chosen GOP boundary. A closed GOP is easier to treat as a self-contained access segment; an open GOP may gain efficiency through cross-boundary references.
 
-## Verify it yourself
-- See the real I/P/B pattern: `ffprobe -select_streams v -show_frames -show_entries frame=pict_type -of csv input.mp4`. Change the GOP with x265 params (`keyint`, `bframes`) and re-run to watch it shift.
+## Display order and decoding order
 
-## Questions this raised
-- (move unresolved ones to ../open-questions.md)
+When a displayed picture depends on another picture that appears later in display order, the reference must be decoded first. The bitstream therefore carries picture-order information, and decoding order can differ from display order.
+
+## What to remember
+
+I/P/B describes allowed prediction behavior. GOP describes a larger dependency pattern. Random-access behavior depends on the actual HEVC picture type and reference structure, not only the letter I.

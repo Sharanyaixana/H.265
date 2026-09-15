@@ -1,32 +1,46 @@
-# What is the hybrid codec pipeline?
+# What is the hybrid video-codec pipeline?
 
-> Chapter 1 · Day 2 (revisit Day 7 & 13) · Source: [[S27]](../SOURCES.md#s27)
+> Learning sequence: Foundations · Sources: [[S3]](../SOURCES.md#s3) [[S33]](../SOURCES.md#s33) [[S43]](../SOURCES.md#s43)
 
-## One-line answer
-Every modern codec (MPEG-2 → H.264 → HEVC → VVC) runs the same per-block loop: **Predict → subtract to get a residual → Transform → Quantize → Entropy-code**, plus a reconstruction feedback path so the encoder predicts from the exact frames the decoder will see.
+## Short answer
 
-## The pipeline in order
+A hybrid video codec combines predictive coding with transform coding. For a typical coded block, the encoder predicts the block, subtracts the prediction to obtain a residual, transforms and quantizes that residual, and entropy-codes the resulting syntax. A local decoder inside the encoder reconstructs the same reference pictures that the real decoder will use.
+
+## Main bitstream path
+
+```text
+original block
+    ↓
+prediction → subtraction → residual → transform → quantization → entropy coding → bitstream
 ```
-PREDICT → SUBTRACT → TRANSFORM → QUANTIZE → ENTROPY-CODE → bits
- (guess)   (residual = (concentrate  (discard the   (pack tightly,
-            original −   energy into   small, unseen   short codes for
-            prediction)  few coeffs)   coefficients)   common symbols)
+
+The encoded syntax can include partition choices, prediction modes, reference indices, motion-vector differences, transform information, quantized coefficient levels, and filter parameters—not only residual coefficients.
+
+## Reconstruction path
+
+```text
+quantized coefficients
+    ↓
+inverse scaling and transform
+    ↓
+reconstructed residual + prediction
+    ↓
+deblocking and Sample Adaptive Offset
+    ↓
+decoded-picture buffer for future prediction
 ```
-The order is deliberate — each stage sets up the next:
-1. **Predict** removes spatial/temporal redundancy.
-2. **Transform** concentrates the leftover energy into a few coefficients.
-3. **Quantize** discards the perceptually-minor part (the lossy step).
-4. **Entropy-code** removes statistical redundancy (lossless).
 
-## The residual is everything
-Prediction is never perfect. `residual = original − prediction`. We code the **residual**, not the pixels. **Good prediction → tiny residual → few bits.** Almost every H.265 tool exists to shrink the residual.
+## Why the local decoder is necessary
 
-## The insight I must be able to explain
-- **The encoder contains a decoder inside it** (inverse quantize → inverse transform → reconstruct → in-loop filter → reference buffer).
-- **Why?** The encoder must predict from the **reconstructed** (slightly degraded) frames — exactly what the decoder will have. If it predicted from pristine originals instead, encoder and decoder would **drift apart** and the picture would fall apart. That feedback path is what makes it a *loop*.
+Quantization changes the residual permanently. The external decoder therefore reconstructs a slightly different picture from the original input. If the encoder predicted future pictures from the pristine original while the decoder predicted from its reconstructed picture, their predictions would differ and error would drift. Both sides must use matching reconstructed references.
 
-## Diagram to draw (THE diagram — practice until it's from memory)
-- The full encoder block diagram (predict → transform → quantize → entropy, plus the inverse path that reconstructs reference frames), including the feedback loop and the point where the residual appears. Redraw it until you can do it from memory.
+## Why it is called hybrid
 
-## Questions this raised
-- (move unresolved ones to ../open-questions.md)
+It combines two major coding ideas:
+
+- **Prediction** removes spatial or temporal correlation.
+- **Transform coding** represents the prediction error in a form that can be quantized and entropy-coded efficiently.
+
+## What to remember
+
+The encoder has two related outputs after quantization: syntax is entropy-coded into the bitstream, while locally reconstructed samples are filtered and stored for future prediction.

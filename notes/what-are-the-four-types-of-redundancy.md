@@ -1,27 +1,28 @@
-# What are the four types of redundancy?
+# What are the four types of redundancy in video?
 
-> Chapter 1 · Day 2 · Source: [[S27]](../SOURCES.md#s27)
+> Learning sequence: Foundations · Sources: [[S3]](../SOURCES.md#s3) [[S7]](../SOURCES.md#s7) [[S27]](../SOURCES.md#s27)
 
-## One-line answer
-Compression works by removing four kinds of redundancy: **spatial** (nearby pixels alike), **temporal** (nearby frames alike), **statistical** (some symbols frequent), and **perceptual** (the eye won't notice some detail). Everything in H.265 is machinery to exploit these four.
+## Short answer
 
-## The four, with examples
+Video compression exploits four useful forms of predictability or irrelevance: **spatial**, **temporal**, **statistical**, and **perceptual** redundancy.
 
-| Redundancy | What repeats / is wasted | Everyday example | H.265 tool that removes it |
+## The four types
+
+| Type | Meaning | Example | Typical tool |
 |---|---|---|---|
-| **Spatial** | neighboring *pixels* in one frame | a clear blue sky — big patches of near-identical pixels | intra prediction + transform |
-| **Temporal** | consecutive *frames* | a news anchor: background frozen, only lips move | inter prediction (motion) |
-| **Statistical** | some *symbols* far more common than others | value "0" appears constantly after quantization | entropy coding (CABAC) |
-| **Perceptual** | detail the eye can't see | fine color detail (already exploited by 4:2:0) | chroma subsampling + quantization |
+| Spatial | Nearby samples within one picture are correlated | A smooth sky or wall | Intra prediction and transform coding |
+| Temporal | Pictures close in time contain related content | A static background behind a moving person | Inter prediction and motion compensation |
+| Statistical | Some symbols or events are more probable than others | Zero coefficients occur frequently after quantization | Context modeling and arithmetic coding |
+| Perceptual | Some changes matter less to human observers | Reduced fine chroma detail | Chroma subsampling and quantization choices |
 
-## The mental hook
-- Spatial + temporal = **prediction** (guess a pixel/block from what's already known).
-- Statistical = **smart labeling** (short codes for common things).
-- Perceptual = **throw away what nobody sees.**
+## Lossless and lossy use
 
-## Lossy vs. lossless
-- **Lossless** (like ZIP): perfect reconstruction, removes only *statistical* redundancy → modest ratios (~2×).
-- **Lossy**: permanently discards detail (perceptual) for far bigger savings → how we reach the ~150× video needs. The knob controlling how much we discard is **quantization**.
+Lossless coding can exploit spatial, temporal, and statistical structure as long as every original sample remains recoverable. Perceptual irrelevance is exploited by lossy coding because information is intentionally discarded or represented less precisely.
 
-## Questions this raised
-- (move unresolved ones to ../open-questions.md)
+Prediction and transforms do not automatically reduce the number of bits. They reshape the data into a form with a more compressible distribution. Quantization and entropy coding then turn that structure into bitrate reduction.
+
+## What to remember
+
+- Prediction attacks spatial and temporal correlation.
+- Quantization makes a controlled rate-quality tradeoff.
+- Entropy coding assigns shorter representations to more probable syntax outcomes.

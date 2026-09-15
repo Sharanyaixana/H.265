@@ -1,28 +1,60 @@
 # Open Questions
 
-A running list of things I couldn't fully answer yet. **Don't let these block daily progress** — jot them here and return each week. Turning these into answers (or into "here's how I'd find out") is exactly how I prep for Q&A and how a researcher thinks.
+This file records questions that require a source-backed answer or an implementation trace. A partial answer is a working model, not a settled result.
 
-Format: question → status (🔴 open / 🟡 partial / 🟢 answered) → my current best understanding.
+**Status:** open · partial · resolved
 
----
+## Q1 Is there something beyond H.265
 
-### Q1. Is there an H.266, or something better than H.265?
-**Status:** 🟡 partial — *(refine in your own words as you study Day 13)*
+**Status:** partial
 
-**Current understanding:**
-- **Yes — H.266 exists.** It's called **VVC (Versatile Video Coding)**, finalized in **2020** by the same ITU/MPEG group (JVET) that made HEVC. Target: roughly **~50% lower bitrate than H.265** at equal quality, using the same hybrid pipeline with more/finer tools (finer partitioning, more prediction modes, better tools for screen and 360° content) — at the cost of **much higher encoder complexity**.
-- **AV1** (AOMedia, ~2018) is a **royalty-free** competitor, roughly HEVC-class or better in efficiency; its adoption was helped by HEVC's messy patent-licensing situation.
-- There's also earlier context: HEVC (2013) succeeded **H.264/AVC** (2003).
-- **The pattern:** each new generation ≈ halves the bitrate but demands a big jump in compute/energy. Whether that trade stays worth it — and how to pay for it in **hardware/energy** — is an open research question (and a good fit for Prof. Sen's lab).
+H.266/Versatile Video Coding (VVC) is the formal successor to HEVC and targets substantially better coding efficiency with higher complexity [[S5]](SOURCES.md#s5). AV1 is a separate AOMedia codec developed under a royalty-free patent policy [[S6]](SOURCES.md#s6). AOMedia also lists AV2 as a developing next-generation specification [[S51]](SOURCES.md#s51).
 
-**To dig deeper:** read Bross et al., "Overview of the VVC Standard," IEEE TCSVT 2021 [[S5]](SOURCES.md#s5); and an AV1 overview paper [[S6]](SOURCES.md#s6). See [notes/how-does-h265-compare-to-h264-av1-vvc.md](notes/how-does-h265-compare-to-h264-av1-vvc.md).
+**Still needed:** compare mature implementations under matched speed, content, quality metric, and hardware conditions. A single percentage is insufficient.
 
----
+## Q2 How does an HEVC encoder select the CU partition
 
-### Q2. _(your next question here)_
-**Status:** 🔴 open
-**Current understanding:**
+**Status:** partial
 
----
+The standard defines legal Coding Unit structures but not a universal encoder search. An encoder can compare split and no-split candidates using rate-distortion cost, then prune the search for speed.
 
-<!-- Add new questions above this line as they come up during study. Review weekly. -->
+**Next step:** trace one CTU in HM and x265, recording the candidates tested, pruning conditions, and final partition.
+
+## Q3 How does an encoder select the PU partition and prediction mode
+
+**Status:** partial
+
+The encoder compares legal Prediction Unit structures and intra or inter candidates using distortion, signaling cost, and implementation-specific screening. The decoder reconstructs the selected syntax; it does not repeat the search.
+
+**Next step:** map legal PU structures to H.265 syntax and inspect one encoder trace.
+
+## Q4 Why does HEVC separate TU from PU
+
+**Status:** partial
+
+The Prediction Unit describes prediction geometry. The Transform Unit describes how the resulting residual is partitioned and transformed. A useful prediction partition does not imply that residual energy has the same spatial structure.
+
+**Next step:** encode one fixed PU with alternative legal transform trees and compare rate, distortion, and signaling overhead.
+
+## Q5 How is QP selected
+
+**Status:** partial
+
+The standard defines how signaled Quantization Parameter information is derived and applied, not one encoder policy. Fixed QP, target-bitrate rate control, and implementation-specific quality modes solve different control problems. Local QP decisions can use rate-distortion analysis within that policy.
+
+**Next step:** document x265 and HM separately: sequence or picture target, rate-control feedback, local offsets, lambda derivation, and signaled delta QP.
+
+## Q6 How does CABAC know which bin belongs to which syntax field
+
+**Status:** partial
+
+The decoder follows the normative H.265 syntax and parsing process. The active syntax element determines the binarization, context, and stopping rule; the arithmetic bitstream contains no textual separators. The earlier unary “number of positions” explanation was not HEVC residual syntax and has been removed.
+
+**Next step:** trace one transform block through H.265 `residual_coding` or the HM decoder and annotate the last-significant position, significance map, level, remainder, and sign syntax.
+
+## Resolution rule
+
+Mark a question resolved only when the repository contains either:
+
+- a clause-level standards explanation with a stable source; or
+- a reproducible trace from a named encoder or decoder version.

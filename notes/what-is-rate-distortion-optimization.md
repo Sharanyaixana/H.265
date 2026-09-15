@@ -1,17 +1,39 @@
-# What is Rate–Distortion Optimization (RDO)?
+# What is Rate Distortion Optimization?
 
-> Chapter 5 · Day 10
+> Learning sequence: Optimization · Sources: [[S3]](../SOURCES.md#s3) [[S7]](../SOURCES.md#s7) [[S44]](../SOURCES.md#s44)
 
-## One-line answer
-RDO is the encoder's decision engine: for every choice (split or not, which mode, which MV, which TU size) it minimizes a Lagrangian cost **J = D + λ·R**, where D is distortion, R is bits, and λ (tied to QP) sets the quality-vs-bits exchange rate.
+## Short answer
 
-## Key points
-- Beginner framing: "for every choice, weigh quality lost + bits spent, pick the cheapest."
-- RDO is **not in the standard** — it's the encoder's private strategy → why encoders differ and why speeding up/approximating RDO is an active research topic.
-- The huge quadtree search space is why HEVC encoding is slow.
+Rate Distortion Optimization (RDO) is an encoder design method for comparing coding candidates with a combined cost, commonly written:
 
-## List every place RDO makes a decision
-- CU split? · intra mode? · inter vs intra? · which MV / merge candidate? · TU size? · ...
+```text
+J = D + lambda R
+```
 
-## Questions this raised
-- (move unresolved ones to ../open-questions.md)
+Here, `D` measures reconstruction distortion, `R` represents estimated or exactly coded bits, and `lambda` sets the exchange rate between distortion and bitrate.
+
+## Why both terms are needed
+
+- Choosing only the smallest distortion can spend an unreasonable number of bits.
+- Choosing only the fewest bits can produce unacceptable reconstruction quality.
+- The combined cost lets the encoder rank candidates that make different compromises.
+
+## What can be compared
+
+An encoder may apply rate-distortion costs to decisions such as:
+
+- Coding Unit split versus no split;
+- intra versus inter prediction;
+- intra mode, reference picture, motion vector, or merge candidate;
+- Prediction Unit and Transform Unit partition choices;
+- coefficient coding and quantization-related alternatives.
+
+## Important limitation
+
+HEVC does not mandate RDO or one distortion metric, rate estimator, lambda formula, search order, or pruning strategy. Full evaluation of every candidate is expensive, so real encoders combine RDO with fast screening, approximations, and early termination.
+
+`lambda` is commonly related to QP, but the exact relationship is encoder-dependent. Sequence-level QP selection and buffer-based rate control are broader control problems and should not be reduced to this formula alone.
+
+## What to remember
+
+RDO is an encoder strategy for choosing among compliant alternatives, not a decoding tool defined by the HEVC bitstream.
