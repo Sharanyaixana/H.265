@@ -14,7 +14,6 @@ Choose the resource that matches your immediate goal:
 | Find a paper, standard, tutorial, or implementation | [SOURCES.md](SOURCES.md) |
 | Follow the prioritized paper-reading list | [Papers to read](papers/README.md) |
 | Track unresolved questions | [Open questions](open-questions.md) |
-| Follow the current study schedule | [Study log](log/README.md) |
 | Recover the HEVC book's technical conclusions | [HEVC book memory](ai%20build/memory.md) |
 | Understand the project's purpose and working standards | [AI build guidance](ai%20build/motivation.md) |
 
@@ -26,8 +25,6 @@ H.265/
 ├── TEXTBOOK.md
 ├── SOURCES.md
 ├── open-questions.md
-├── log/
-│   └── README.md
 ├── ai build/
 │   ├── feedback.md
 │   ├── memory.md
